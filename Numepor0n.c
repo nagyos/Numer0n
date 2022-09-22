@@ -4,30 +4,28 @@
 #define NUM1 4
 #define NUM2 45
 
-void gr_random(void);
-void check();
+void genRandomNumber(void);
+void checkEachDigits();
 void item(void);
 int HIGHLOW(void);
 int TARGET(void);
 int SLASH(void);
 void result(void);
 
-int a,b,c;//関数の関係上グローバル変数とした
-char rt[NUM2];//今までの記録を表示
+int a,b,c;
+char recode[NUM2];//今までの記録を表示
 
-int main(void)
-{
+int main(void){
     printf("！チャレンジは7回！\n");
     printf("数値入力してください。アイテム[a]/入力履歴[r]/強制終了[f]\n\n");
     printf("\t\t\t\t 1回目の入力>>");
-    
-    gr_random();
+
+    genRandomNumber();
 
     return 0;
 }
 
-void gr_random(void)
-{
+void genRandomNumber(void){
     srand((unsigned)time(NULL));
 
     a=rand()%10+0;
@@ -40,19 +38,18 @@ void gr_random(void)
         c=rand()%10+0;
     }
 
-    check(a,b,c);
-    
+    checkEachDigits(a,b,c);
+
 }
 
-void check(int x, int y, int z)
-{
-    int i=0,j=0,r=1,t=1,k=0,l=0;  
-    
+void checkEachDigits(int x, int y, int z){
+    int i=0,j=0,r=1,t=1,k=0,l=0;
+
     char str[NUM1];
     char e,f,g;
 
     for(r=1;r<=7;r++){
-            
+
             scanf("%s", str);
 
             if(str[1]=='\0'){//一桁の数値を入力したときの対処
@@ -65,7 +62,7 @@ void check(int x, int y, int z)
                 else if(str[0]=='f') {//終了選択
                     r=10;
                     break;
-                }  
+                }
                 else if(str[0]=='r') {
                     result();//今までの履歴を表示
                     printf("\t\t\t もう一度%d回目の入力>>",r);
@@ -88,7 +85,7 @@ void check(int x, int y, int z)
                 r--;
                 continue;
             }
-            
+
             else if((str[0]==str[1] || str[1]==str[2] || str[2]==str[0]) && str[3]=='\0'){//三桁で重複の場合の対処
                 printf("⚠︎重複⚠︎\t\t\t もう一度%d回目の入力>>", r);
                 r--;
@@ -112,15 +109,15 @@ void check(int x, int y, int z)
             g='0'+ z;//以下は文字としての数字比較をの処理　''は要らない
 
             if(str[0]==e){
-                    i++;    
+                    i++;
             }
             else if(str[0]!=e && (str[0]==f || str[0]==g)){
                     j++;
             }
-            
+
             if(str[1]==f){
                     i++;
-            } 
+            }
             else if(str[1]!=f && (str[1]==e || str[1]==g)){
                     j++;
             }
@@ -134,30 +131,29 @@ void check(int x, int y, int z)
             printf("%c%c%c\t%dE %dB\t(%-d回目)",str[0],str[1],str[2],i,j,r);
 
             for(k=0;k<3;k++){//数値の記録
-                rt[l]=str[k];
+                recode[l]=str[k];
                 l++;
             }
             //EとBの記録
-            rt[l]='0'+i;
+            recode[l]='0'+i;
             l++;
-            rt[l]='0'+j;
+            recode[l]='0'+j;
             l++;
-            rt[l]='0'+r;
+            recode[l]='0'+r;
             l++;
-            
+
             if(i==3)break;
         for(;t==r && t<7;t++){//10回目を入力後は表示させないためにt<10としている
             printf("\t\t%2d回目の入力>>",t+1);//t+1に注意
         }
             i=0;
             j=0;
-    } 
-    
+    }
+
     if (r<=7)printf("\n正解です！！\n答えは%d%d%d！(･ω･)bｸﾞｯ\n", x,y,z);
     else if(r==8){
         printf("\n残念。。。\n答えは%d%d%dでした。(･ω･)bｸﾞｯ\n", x,y,z);
-    }
-    else{
+    }else{
         printf("チャレンジ終了を選択しました。　答えは%d%d%dでした。(･ω･)bｸﾞｯ\n", x,y,z);
     }
 
@@ -168,17 +164,17 @@ void item(void)
     int h=1, t=1, s=1;
     static int l, m, n;//staticをつけて記憶寿命を伸ばした→関数を呼ぶたびに初期化されないようにした。本当のグローバル関数とは異なる。
     char ch;
-    
+
     printf("\nHIGH&LOW(%d)/TARGET(%d)/SLASH(%d)\n", h-l, t-m, s-n);
 
     if((h-l)+(t-m)+(s-n)!=0){
         printf("どのアイテムを使いますか？\n");
         printf("HIGH&LOW→[h] /TARGET→[t] /SLASH→[s] /戻る→[h][t][s]以外を入力してください。> ");
-        
+
         rewind(stdin);//前回の入力に改行コードが自動的に入っているので、これで抜け出す
         scanf("%c", &ch); //putchar(ch);ch=getchar();でも可能
-       
-       
+
+
         if(ch=='h' && l!=1){
             l=HIGHLOW();
         }
@@ -191,8 +187,7 @@ void item(void)
         else{
             printf("戻りました。\n");
         }
-    }
-    else{
+    }else{
         printf("アイテムは使用できません。 戻ります。\n");
     }
 }
@@ -203,26 +198,23 @@ int HIGHLOW(void)
 
     if(a>=5){
         h++;
-    }
-    else{
+    }else{
         l++;
     }
 
     if(b>=5){
         h++;
-    }
-    else{
+    }else{
         l++;
     }
 
     if(c>=5){
         h++;
-    }
-    else{
+    }else{
         l++;
     }
     printf("\n%dHIGH %dLOW\n\n", h, l);
-    
+
     return 1;//アイテムは１つにつき1回までとした
 }
 
@@ -236,14 +228,11 @@ int TARGET(void)
 
     if(t==a){
         printf("%d は100の桁にあります。",t);
-    }
-    else if(t==b){
+    }else if(t==b){
         printf("%d は10の桁にあります。",t);
-    }
-    else if(t==c){
+    }else if(t==c){
         printf("%d は1の桁にあります。",t);
-    }
-    else{
+    }else{
         printf("%d は含まれていません。",t);
     }
 
@@ -273,7 +262,7 @@ int SLASH(void)
 
     return 1;
 }
- 
+
 void result(void)
 {
     int l;
@@ -281,23 +270,23 @@ void result(void)
     printf("\n<結果履歴>\n");
 
     for(l=1;l<NUM2;l++){
-            if(rt[l-1]=='\0'){
+            if(recode[l-1]=='\0'){
                 break;
             }
             else if(l%6==1 || l%6==2){
-                printf("%c",rt[l-1]);
+                printf("%c",recode[l-1]);
             }
             else if(l%6==3){
-                printf("%c",rt[l-1]);
+                printf("%c",recode[l-1]);
             }
             else if(l%6==4){
-                printf("\t%cE ",rt[l-1]);
+                printf("\t%cE ",recode[l-1]);
             }
             else if(l%6==5){
-                printf("%cB\t",rt[l-1]);
+                printf("%cB\t",recode[l-1]);
             }
             else if(l%6==0){
-                printf("(%-c回目)",rt[l-1]);
+                printf("(%-c回目)",recode[l-1]);
                 printf("\n");
             }
     }
