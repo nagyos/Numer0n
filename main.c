@@ -81,6 +81,31 @@ void genAnswerNumber(char ans[DIGIT_SIZE]){
     ans[1] = secondNum + '0';
     ans[2] = thirdNum + '0';
 }
+
+bool play(struct number *number, struct history *history, struct item *item){
+    bool isFound = false;
+    history->playCnt = 0;
+    while(!isFound){
+        printf("\t\t\t\t %d回目の入力>>", history->playCnt + 1);
+
+        inputNumber(number->myInput);
+
+        if(number->myInput[0] == 'a'){
+            useItem(number, item);
+            continue;
+        }
+
+        isFound = compareNumber(number, history);
+
+        history->playCnt++;
+        displayHistory(number,history);
+
+        if(history->playCnt == TRY_LIMIT)return false;
+    }
+
+    return isFound;
+}
+
 void inputNumber(char _myinput[DIGIT_SIZE]){
     bool isValid = false;
     while(!isValid){
