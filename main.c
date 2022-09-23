@@ -123,6 +123,26 @@ bool isValidInput(char _inputNum[]){
     return false;
 }
 
+bool compareNumber(struct number *number, struct history *history){
+    int eatCnt=0, biteCnt=0;
+
+    for(int i = 0; i < DIGIT_SIZE; i++){
+        if(number->answer[i] == number->myInput[i])eatCnt++;
+        else{
+            for(int j = 0; j < DIGIT_SIZE; j++){
+                if(number->answer[j] == number->myInput[i])biteCnt++;
+            }
+        }
+    }
+
+    strncpy(history->myInputNumbers[history->playCnt], number->myInput, DIGIT_SIZE);
+    history->eatCounts[history->playCnt] = eatCnt;
+    history->biteCounts[history->playCnt] = biteCnt;
+
+    if(eatCnt == DIGIT_SIZE)return true;
+
+    return false;
+}
 void useItem(struct number *number, struct item *item)
 {
     if(!(item->hlFlag || item->slashFlag || item->tgFlag)){
