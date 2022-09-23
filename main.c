@@ -143,6 +143,13 @@ bool compareNumber(struct number *number, struct history *history){
 
     return false;
 }
+
+void displayHistory(struct number *number, struct history *history){
+    for(int i = 0; i < history->playCnt; i++){
+        printf("%2d回目  %c%c%c : %d EAT %d BITE\n",i + 1, history->myInputNumbers[i][0] ,history->myInputNumbers[i][1] ,history->myInputNumbers[i][2], history->eatCounts[i], history->biteCounts[i]);
+    }
+}
+
 void useItem(struct number *number, struct item *item)
 {
     if(!(item->hlFlag || item->slashFlag || item->tgFlag)){
