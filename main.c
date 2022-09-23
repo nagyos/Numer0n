@@ -41,6 +41,46 @@ struct item {
     void (*_slash)();
 };
 
+int main(void){
+    printf("%d桁の数字を当てよう！",DIGIT_SIZE);
+    printf("！チャレンジは%d回！\n",TRY_LIMIT);
+    printf("%d桁の半角数値入力してください。アイテムを使用する場合は a を入力\n", DIGIT_SIZE);
+    printf("アイテムの使用はチャレンジ回数に含まない\n");
+
+    struct number number;
+    genAnswerNumber(&(number.answer));
+    // printf("答え:%s\n",number.answer);
+
+    struct history history;
+    struct item item;
+    item.hlFlag = item.slashFlag = item.tgFlag =true;
+    item._highLow = highLow, item._slash = slash, item._target =target;
+
+    if(play(&number, &history, &item)){
+        printf("\n正解です\n答えは%s！\n", number.answer);
+    }else{
+        printf("\nチャレンジ失敗\n答えは%sでした\n", number.answer);
+    }
+
+    return 0;
+}
+
+void genAnswerNumber(char ans[DIGIT_SIZE]){
+    srand((unsigned)time(NULL));
+    int firstNum =rand()%10,
+        secondNum = rand()%10,
+        thirdNum = rand()%10;
+
+    while(secondNum == firstNum){
+        secondNum = rand()%10;
+    }
+    while(thirdNum == firstNum || thirdNum == secondNum){
+        thirdNum = rand()%10;
+    }
+    ans[0] = firstNum + '0';
+    ans[1] = secondNum + '0';
+    ans[2] = thirdNum + '0';
+}
 void inputNumber(char _myinput[DIGIT_SIZE]){
     bool isValid = false;
     while(!isValid){
