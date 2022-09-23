@@ -1,3 +1,19 @@
+void inputNumber(char _myinput[DIGIT_SIZE]){
+    bool isValid = false;
+    while(!isValid){
+        scanf(" %s", _myinput);
+        isValid = isValidInput(_myinput);
+        if (!isValid) continue;
+    }
+}
+
+bool isValidInput(char _inputNum[]){
+    if(_inputNum[0] == 'a' && _inputNum[1] == '\0') return true;
+    if(isdigit(_inputNum[0]) && isdigit(_inputNum[1]) && isdigit(_inputNum[2]) && _inputNum[3] == '\0') return true;
+
+    printf("入力が正しくありません > ");
+    return false;
+}
 
 void useItem(struct number *number, struct item *item)
 {
