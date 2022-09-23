@@ -1,3 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <time.h>
+#define DIGIT_SIZE 3
+#define TRY_LIMIT 10
+#define TEMP_INPUT_SIZE 50
+
+// 関数のプロトタイプ宣言
+void genAnswerNumber();
+bool play();
+void inputNumber();
+bool isValidInput();
+bool compareNumber();
+void displayHistory();
+void useItem();
+bool isValidItem();
+void highLow();
+void slash();
+void target();
+
+struct number {
+    char answer[DIGIT_SIZE+1];
+    char myInput[DIGIT_SIZE+1];
+};
+
+struct history{
+    char myInputNumbers[TRY_LIMIT][DIGIT_SIZE];
+    int eatCounts[TRY_LIMIT];
+    int biteCounts[TRY_LIMIT];
+    int playCnt;
+};
+
+struct item {
+    bool hlFlag;
+    bool tgFlag;
+    bool slashFlag;
+    void (*_highLow)();
+    void (*_target)();
+    void (*_slash)();
+};
+
 void inputNumber(char _myinput[DIGIT_SIZE]){
     bool isValid = false;
     while(!isValid){
