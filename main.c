@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #define DIGIT_SIZE 3
 #define TRY_LIMIT 10
 #define TEMP_INPUT_SIZE 50
@@ -62,6 +63,7 @@ int main(void){
         printf("\nチャレンジ失敗\n答えは%sでした\n", number.answer);
     }
 
+
     return 0;
 }
 
@@ -80,6 +82,7 @@ void genAnswerNumber(char ans[DIGIT_SIZE]){
     ans[0] = firstNum + '0';
     ans[1] = secondNum + '0';
     ans[2] = thirdNum + '0';
+    ans[3] = '\0';
 }
 
 bool play(struct number *number, struct history *history, struct item *item){
